@@ -68,8 +68,15 @@ void Kayttoliittyma::piirraLauta()
 					BACKGROUND_GREEN | BACKGROUND_BLUE);
 				wcout << 1;
 			}
-			if (i % 2 != 0) {
+			if (i % 2 != 0){
 				if (j % 2 == 0)
+					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | BACKGROUND_RED |
+						BACKGROUND_GREEN | BACKGROUND_BLUE);
+				else
+					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | BACKGROUND_RED);
+			}
+			else {
+				if (j % 2 != 0)
 					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | BACKGROUND_RED |
 						BACKGROUND_GREEN | BACKGROUND_BLUE);
 				else
@@ -81,11 +88,11 @@ void Kayttoliittyma::piirraLauta()
 			}
 			else {
 				wcout << "   ";
-			}
+			}			
 		}
 		wcout << "\n";
 	}
-	wcout << " " << " a " << " b " << " c " << " d " << " e " << " f " << " g " << " h \n";
+	wcout << " " << "a " << " b " << " c " << " d " << " e " << " f " << " g " << " h \n";
 }
 
 
