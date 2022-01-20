@@ -80,7 +80,7 @@ void Kayttoliittyma::piirraLauta()
 				wcout << " " << _asema->_lauta[j][i]->getUnicode() << " ";
 			}
 			else {
-				wcout << " ";
+				wcout << "   ";
 			}
 		}
 		wcout << "\n";
