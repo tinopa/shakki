@@ -22,55 +22,70 @@ Kayttoliittyma* Kayttoliittyma::getInstance()
 
 void Kayttoliittyma::piirraLauta()
 {
-	//ei toimi ????
+	SetConsoleOutputCP(65001);
 
 	_setmode(_fileno(stdout), _O_U16TEXT);
+
 	for (int i = 7; i >= 0; i--) {
-		for (int j = 0; j < 8; i++) {
-			if (j == 0) {
-				if (i == 7) {
-					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE);
-					wcout << i + 1;
-				}
-				else if (i == 6) {
-					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE);
-					wcout << i + 1;
-				}
-				else if (i == 5) {
-					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE);
-					wcout << i + 1;
-				}
-				else if (i == 4) {
-					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE);
-					wcout << i + 1;
-				}
-				else if (i == 3) {
-					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE);
-					wcout << i + 1;
-				}
-				else if (i == 2) {
-					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE);
-					wcout << i + 1;
-				}
-				else if (i == 1) {
-					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE);
-					wcout << i + 1;
-				}
-				else if (i == 0) {
-					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE);
-					wcout << i + 1;
-				}
+		for (int j = 0; j < 8; j++) {
+			if (j == 0 && i == 7) {
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | BACKGROUND_RED |
+					BACKGROUND_GREEN | BACKGROUND_BLUE);
+				wcout << 8;
 			}
-			if (_asema->_lauta[i][j] != NULL) {
-				wcout << " " << _asema->_lauta[i][j]->getUnicode() << " ";
+			if (j == 0 && i == 6) {
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | BACKGROUND_RED |
+					BACKGROUND_GREEN | BACKGROUND_BLUE);
+				wcout << 7;
+			}
+			if (j == 0 && i == 5) {
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | BACKGROUND_RED |
+					BACKGROUND_GREEN | BACKGROUND_BLUE);
+				wcout << 6;
+			}
+			if (j == 0 && i == 4) {
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | BACKGROUND_RED |
+					BACKGROUND_GREEN | BACKGROUND_BLUE);
+				wcout << 5;
+			}
+			if (j == 0 && i == 3) {
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | BACKGROUND_RED |
+					BACKGROUND_GREEN | BACKGROUND_BLUE);
+				wcout << 4;
+			}
+			if (j == 0 && i == 2) {
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | BACKGROUND_RED |
+					BACKGROUND_GREEN | BACKGROUND_BLUE);
+				wcout << 3;
+			}
+			if (j == 0 && i == 1) {
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | BACKGROUND_RED |
+					BACKGROUND_GREEN | BACKGROUND_BLUE);
+				wcout << 2;
+			}
+			if (j == 0 && i == 0) {
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | BACKGROUND_RED |
+					BACKGROUND_GREEN | BACKGROUND_BLUE);
+				wcout << 1;
+			}
+			if (i % 2 != 0) {
+				if (j % 2 == 0)
+					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | BACKGROUND_RED |
+						BACKGROUND_GREEN | BACKGROUND_BLUE);
+				else
+					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | BACKGROUND_RED);
+			}
+
+			if (_asema->_lauta[j][i] != NULL) {
+				wcout << " " << _asema->_lauta[j][i]->getUnicode() << " ";
 			}
 			else {
-				wcout << "   ";
+				wcout << " ";
 			}
 		}
 		wcout << "\n";
 	}
-	wcout << "  " << "a  " << " b " << " c " << " d " << " e " << " f " << " g " << " h \n";
+	wcout << " " << "a " << " b " << " c " << " d " << " e " << " f " << " f " << " g " << " h \n";
 }
 
 
