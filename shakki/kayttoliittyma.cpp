@@ -92,7 +92,7 @@ void Kayttoliittyma::piirraLauta()
 		}
 		wcout << "\n";
 	}
-	wcout << " " << "a " << " b " << " c " << " d " << " e " << " f " << " g " << " h \n";
+	wcout << " " << " a " << " b " << " c " << " d " << " e " << " f " << " g " << " h \n";
 }
 
 
