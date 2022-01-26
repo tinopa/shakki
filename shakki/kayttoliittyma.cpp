@@ -103,11 +103,32 @@ void Kayttoliittyma::piirraLauta()
 */
 Siirto Kayttoliittyma::annaVastustajanSiirto()
 {
-	Siirto siirto;
+	wstring siirtoS;
+	Ruutu alkuRuutu;
+	Ruutu loppuRuutu;
+
+	wcout << "Anna vastustajan siirto: ";
+	wcin >> siirtoS;
+
+	if (siirtoS == L"0-0") {
+		Siirto siirto(true, false);
+		return siirto;
+	}
+	else if (siirtoS == L"0-0-0") {
+		Siirto siirto(false, true);
+		return siirto;
+	}
+	else {
+		alkuRuutu.setRivi(siirtoS[2]);
+		alkuRuutu.setSarake((int)siirtoS[1] % 32 - 1);
+		loppuRuutu.setRivi(siirtoS[5]);
+		loppuRuutu.setSarake((int)siirtoS[4] % 32 - 1);
+	}
+	
+	Siirto siirto(alkuRuutu, loppuRuutu);
 	return siirto;
 	
 }
-
 
 int Kayttoliittyma::kysyVastustajanVari()
 {
