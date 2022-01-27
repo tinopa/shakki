@@ -61,12 +61,34 @@ void Asema::paivitaAsema(Siirto* siirto)
 
 	//Tarkastetaan on siirto lyhyt linna
 	if (siirto->onkoLyhytLinna()) {
-
+		if (_siirtovuoro == 0) {
+			_lauta[4][0] = NULL;
+			_lauta[6][0] = vk;
+			_lauta[7][0] = NULL;
+			_lauta[5][0] = vt;
+		}
+		else if (_siirtovuoro == 1) {
+			_lauta[4][7] = NULL;
+			_lauta[6][7] = mk;
+			_lauta[7][7] = NULL;
+			_lauta[5][7] = mt;
+		}
 	}
 
 	// onko pitkä linna
 	else if (siirto->onkoPitkälinna()) {
-
+		if (_siirtovuoro == 0) {
+			_lauta[4][0] = NULL;
+			_lauta[2][0] = vk;
+			_lauta[0][0] = NULL;
+			_lauta[3][0] = vt;
+		}
+		else if (_siirtovuoro == 1) {
+			_lauta[4][7] = NULL;
+			_lauta[2][7] = mk;
+			_lauta[0][7] = NULL;
+			_lauta[3][7] = mt;
+		}
 	}
 
 
@@ -90,9 +112,9 @@ void Asema::paivitaAsema(Siirto* siirto)
 
 		}
 		////muissa tapauksissa alkuruutuun null ja loppuruutuun sama alkuruudusta lähtenyt nappula
-		else {
-			_lauta[siirto->getAlkuruutu().getSarake()][siirto->getAlkuruutu().getRivi()] = NULL;
-		}
+		//else {
+		_lauta[siirto->getAlkuruutu().getSarake()][siirto->getAlkuruutu().getRivi()] = NULL;
+		//}
 		// katsotaan jos liikkunut nappula on kuningas niin muutetaan onkoKuningasLiikkunut arvo (molemmille väreille)
 		if (nappulaKoodi == VK)
 			_onkoValkeaKuningasLiikkunut = true;
