@@ -49,6 +49,16 @@ Asema::Asema()
 	_lauta[7][7] = mt;
 	for (int i = 0; i < 8; i++)
 		_lauta[i][6] = ms;
+
+	//alustetaan kaikki booleanit
+	_onkoValkeaKuningasLiikkunut = false;
+	_onkoMustaKuningasLiikkunut = false;
+	_onkoValkeaDTliikkunut = false;
+	_onkoValkeaKTliikkunut = false;
+	_onkoMustaDTliikkunut = false;
+	_onkoMustaKTliikkunut = false;
+
+	_siirtovuoro = 0;
 }
 
 
