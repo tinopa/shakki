@@ -103,32 +103,41 @@ void Kayttoliittyma::piirraLauta()
 */
 Siirto Kayttoliittyma::annaVastustajanSiirto()
 {
+	int lahtoX, lahtoY, tuloX, tuloY;
 	wstring siirtoS;
+	wstring siirtynytNappulaS;
+	do {
+		wcout << "Anna vastustajan siirto esim. Rg1-f3, linnoitus 0-0 tai 0-0-0\n";
+		wcin >> siirtoS;
+
+		if (siirtoS == L"0-0") {
+			return Siirto(true, false);
+		}
+		else if (siirtoS == L"0-0-0") {
+			return Siirto(false, true);
+		}
+		else if (siirtoS.length() == 6) {	//jos siirron ensimmäinen merkki on nappulan kirjain, karsitaan se pois
+			siirtynytNappulaS = siirtoS[0];
+			siirtoS.erase(0, 1);
+		}
+		else {
+			siirtynytNappulaS = L"s";
+		}
+		lahtoX = siirtoS[0] - 'a';
+		lahtoY = _wtoi(&siirtoS[1]) - 1;
+		tuloX = siirtoS[3] - 'a';
+		tuloY = _wtoi(&siirtoS[4]) - 1;
+
+		if (((lahtoX < 0 || lahtoX > 7) || (lahtoY < 0 || lahtoX > 7) || (tuloX < 0 || tuloX > 7) || (tuloY < 0 || tuloY > 7)))
+			wcout << "siirron täytyy olla muotoa esim. Rf1-f3, \n aakkoset väliltä a-h\n numerot väliltä 1-8\n Nappula on (K,k),(D,d),(R,r),(L,l)\n sotilas jätetään merkitsemättä\n";
+		
+	} while (((lahtoX < 0 || lahtoX > 7) || (lahtoY < 0 || lahtoX > 7) || (tuloX < 0 || tuloX > 7) || (tuloY < 0 || tuloY > 7)));
+
+	Ruutu alkuRuutu(lahtoX, lahtoY);
+	Ruutu loppuRuutu(tuloX, tuloY);
+
+	return Siirto(alkuRuutu, loppuRuutu);
 	
-	wcout << "Anna vastustajan siirto: ";
-	wcin >> siirtoS;
-
-	if (siirtoS == L"0-0") {
-		return Siirto(true, false);
-	}
-	else if (siirtoS == L"0-0-0") {
-		return Siirto(false, true);
-	}
-	else if (siirtoS.length() > 5) {	//jos siirron ensimmäinen merkki on nappulan kirjain, karsitaan se pois
-		siirtoS.erase(0, 1);
-	}
-	else {
-		Ruutu alkuRuutu(
-			_wtoi(&siirtoS[1]) - 1,		//muunnetaan wchar muotoon int
-			(int)siirtoS[0] % 32 - 1	//muutetaan kirjain järjestyslukuun aakkosissa
-		);
-		Ruutu loppuRuutu(
-			_wtoi(&siirtoS[4]) - 1, 
-			(int)siirtoS[3] % 32 - 1
-		);
-
-		return Siirto(alkuRuutu, loppuRuutu);
-	}
 }
 
 int Kayttoliittyma::kysyVastustajanVari()
