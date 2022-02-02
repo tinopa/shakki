@@ -94,13 +94,18 @@ void Asema::paivitaAsema(Siirto* siirto)
 
 	// Kaikki muut siirrot
 	else {
+		int alkuRiviInt, alkuSarakeInt, loppuRiviInt, loppuSarakeInt;
 
 		//Ottaa siirron alkuruudussa olleen nappulan talteen 
-		Nappula* liikkuva = _lauta[siirto->getAlkuruutu().getSarake()][siirto->getAlkuruutu().getRivi()];
-		int nappulaKoodi = liikkuva->getKoodi();
+		alkuRiviInt = siirto->getAlkuruutu().getRivi();
+		alkuSarakeInt = siirto->getAlkuruutu().getSarake();
+
+		Nappula* nappula = _lauta[alkuSarakeInt][alkuRiviInt];
+		int nappulaKoodi = nappula->getKoodi();
 
 		//Laittaa talteen otetun nappulan uuteen ruutuun
-		_lauta[siirto->getLoppuruutu().getSarake()][siirto->getLoppuruutu().getRivi()];
+		loppuRiviInt = siirto->getLoppuruutu().getRivi();
+		loppuSarakeInt = siirto->getLoppuruutu().getSarake();
 
 		// Tarkistetaan oliko sotilaan kaksoisaskel
 		// (asetetaan kaksoisaskel-lippu)
@@ -113,7 +118,8 @@ void Asema::paivitaAsema(Siirto* siirto)
 		}
 		////muissa tapauksissa alkuruutuun null ja loppuruutuun sama alkuruudusta lähtenyt nappula
 		//else {
-		_lauta[siirto->getAlkuruutu().getSarake()][siirto->getAlkuruutu().getRivi()] = NULL;
+		_lauta[alkuSarakeInt][alkuRiviInt] = NULL;
+		_lauta[loppuSarakeInt][loppuRiviInt] = nappula;
 		//}
 		// katsotaan jos liikkunut nappula on kuningas niin muutetaan onkoKuningasLiikkunut arvo (molemmille väreille)
 		if (nappulaKoodi == VK)
