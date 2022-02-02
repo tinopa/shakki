@@ -114,14 +114,17 @@ Siirto Kayttoliittyma::annaVastustajanSiirto()
 	else if (siirtoS == L"0-0-0") {
 		return Siirto(false, true);
 	}
+	else if (siirtoS.length() > 5) {	//jos siirron ensimmäinen merkki on nappulan kirjain, karsitaan se pois
+		siirtoS.erase(0, 1);
+	}
 	else {
 		Ruutu alkuRuutu(
-			_wtoi(&siirtoS[2]) - 1,		//muunnetaan wchar muotoon int
-			(int)siirtoS[1] % 32 - 1	//muutetaan kirjain järjestyslukuun aakkosissa
+			_wtoi(&siirtoS[1]) - 1,		//muunnetaan wchar muotoon int
+			(int)siirtoS[0] % 32 - 1	//muutetaan kirjain järjestyslukuun aakkosissa
 		);
 		Ruutu loppuRuutu(
-			_wtoi(&siirtoS[5]) - 1, 
-			(int)siirtoS[4] % 32 - 1
+			_wtoi(&siirtoS[4]) - 1, 
+			(int)siirtoS[3] % 32 - 1
 		);
 
 		return Siirto(alkuRuutu, loppuRuutu);
