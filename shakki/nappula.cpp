@@ -193,7 +193,96 @@ void Ratsu::annaSiirrot(std::list<Siirto>& lista, Ruutu* ruutu, Asema* asema, in
 
 void Lahetti::annaSiirrot(std::list<Siirto>& lista, Ruutu* ruutu, Asema* asema, int vari)
 {
-	
+	int i = 0;
+	bool vapaaYlaOikea = true,
+		 vapaaYlaVasen = true,
+		 vapaaAlaOikea = true,
+		 vapaaAlaVasen = true;
+	Ruutu r;
+
+	while (vapaaAlaOikea || vapaaAlaVasen || vapaaYlaOikea || vapaaYlaVasen) {
+
+		if (vapaaYlaOikea) {
+			//tarkistetaan seuraava ruutu yläviistossa oikealle
+			r = Ruutu(ruutu->getSarake() + i, ruutu->getRivi() + i);
+			if (r.getSarake() < 8 && r.getRivi() < 8) {
+				if (asema->_lauta[r.getSarake()][r.getRivi()] == NULL) {
+					//ruutu on tyhjä ja siihe voidaan siirtyä
+					lista.push_back(Siirto(*ruutu, r));
+				}
+				else if (asema->_lauta[r.getSarake()][r.getRivi()] != NULL) {
+					//ruudulla on toinen nappula
+					if (asema->_lauta[r.getSarake()][r.getRivi()]->getVari() != vari) {
+						//ruudulla on vastustajan nappula, siihen voidaan siirtyä
+						lista.push_back(Siirto(*ruutu, r));
+					}
+					else {
+						//ruudulla on oma nappula, ei voi siirtyä
+						vapaaYlaOikea = false;
+					}
+				}
+			}
+			else {
+				//yritetään siirtää nappulaa laudan ulkopuolelle. ei onnistu
+				vapaaYlaOikea = false;
+			}
+		}
+
+		if (vapaaYlaVasen) {
+			//tarkistetaan seuraava ruutu yläviistossa vasemmalle
+			r = Ruutu(ruutu->getSarake() - i, ruutu->getRivi() + i);
+			if (r.getSarake() > -1 && r.getRivi() < 8) {
+				if (asema->_lauta[r.getSarake()][r.getRivi()] == NULL)
+					lista.push_back(Siirto(*ruutu, r));
+
+				else if (asema->_lauta[r.getSarake()][r.getRivi()] != NULL) {
+					if (asema->_lauta[r.getSarake()][r.getRivi()]->getVari() != vari)
+						lista.push_back(Siirto(*ruutu, r));
+					else
+						vapaaYlaVasen = false;
+				}
+			}
+			else
+				vapaaYlaVasen = false;
+		}
+
+		if (vapaaAlaOikea) {
+			//tarkistetaan seuraava ruutu alaviistosssa oikealle
+			r = Ruutu(ruutu->getSarake() + i, ruutu->getRivi() - i);
+			if (r.getSarake() < 8 && r.getRivi() > - 1) {
+				if (asema->_lauta[r.getSarake()][r.getRivi()] == NULL)
+					lista.push_back(Siirto(*ruutu, r));
+
+				else if (asema->_lauta[r.getSarake()][r.getRivi()] != NULL) {
+					if (asema->_lauta[r.getSarake()][r.getRivi()]->getVari() != vari)
+						lista.push_back(Siirto(*ruutu, r));
+					else
+						vapaaAlaOikea = false;
+				}
+			}
+			else
+				vapaaAlaOikea = false;
+		}
+
+		if (vapaaAlaVasen) {
+			//tarkistetaan seuraava ruutu alaviistossa vasemmalle
+			r = Ruutu(ruutu->getSarake() - i, ruutu->getRivi() - i);
+			if (r.getSarake() > -1 && r.getRivi() > -1) {
+				if (asema->_lauta[r.getSarake()][r.getRivi()] == NULL)
+					lista.push_back(Siirto(*ruutu, r));
+
+				else if (asema->_lauta[r.getSarake()][r.getRivi()] != NULL) {
+					if (asema->_lauta[r.getSarake()][r.getRivi()]->getVari() != vari)
+						lista.push_back(Siirto(*ruutu, r));
+					else
+						vapaaAlaVasen = false;
+				}
+			}
+			else
+				vapaaAlaVasen = false;
+		}
+		i++;
+	}
 }
 
 
