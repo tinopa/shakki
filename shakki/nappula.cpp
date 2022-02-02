@@ -410,7 +410,25 @@ void Kuningas::annaSiirrot(std::list<Siirto>& lista, Ruutu* ruutu, Asema* asema,
 
 void Sotilas::annaSiirrot(std::list<Siirto>& lista, Ruutu* ruutu, Asema* asema, int vari)
 {
-	
+	Ruutu r = Ruutu(ruutu->getSarake(), ruutu->getRivi() + 1); //ruutu johon yritet‰‰n liikkua
+	if (r.getRivi() < 8) {
+		//1 ruutu eteenp‰in
+		if (asema->_lauta[r.getSarake()][r.getRivi()] == NULL) {
+			lista.push_back(Siirto(*ruutu, r));
+		}
+		//katsontaan onko mahdollista menn‰ kaksi ruutua eteenp‰in
+		if (ruutu->getRivi() == 1 && asema->_lauta[r.getSarake()][r.getRivi() + 1] == NULL)
+			lista.push_back(Siirto(*ruutu, Ruutu(r.getSarake(), r.getRivi() + 1)));
+		//katsotaan onko edess‰ oikealla vastustajan nappulaa
+		if (asema->_lauta[r.getSarake() + 1][r.getRivi()] != NULL && asema->_lauta[r.getSarake() + 1][r.getRivi()]->getVari() != vari)
+			lista.push_back(Siirto(*ruutu, Ruutu(r.getSarake() + 1, r.getRivi())));
+		//katsontaan onko edess‰ vasemmalla vastustajan palikkaa
+		if (asema->_lauta[r.getSarake() - 1][r.getRivi()] != NULL && asema->_lauta[r.getSarake() - 1][r.getRivi()]->getVari() != vari)
+			lista.push_back(Siirto(*ruutu, Ruutu(r.getSarake() - 1, r.getRivi())));
+	}
+	else {
+		//korotus
+	}
 }
 
 
