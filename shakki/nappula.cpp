@@ -82,7 +82,112 @@ void Torni::annaSiirrot(std::list<Siirto>& lista, Ruutu* ruutu, Asema* asema, in
 
 void Ratsu::annaSiirrot(std::list<Siirto>& lista, Ruutu* ruutu, Asema* asema, int vari)
 {
-	
+	int lahtoruutuY = ruutu->getRivi(), lahtoruutuX = ruutu->getSarake(), lahtoruudunNappulanVari, tuloruudunNappulanVari;
+	lahtoruudunNappulanVari = asema->_lauta[lahtoruutuX][lahtoruutuY]->getVari();
+	if (lahtoruutuX + 1 < 8 && lahtoruutuY + 2 < 8) {
+		if (asema->_lauta[lahtoruutuX + 1][lahtoruutuY + 2] == NULL) {
+			lista.push_back(Siirto(*ruutu, Ruutu(lahtoruutuX + 1, lahtoruutuY + 2)));
+		}
+		else if (asema->_lauta[lahtoruutuX + 1][lahtoruutuY + 2] != NULL) {
+			tuloruudunNappulanVari = asema->_lauta[lahtoruutuX + 1][lahtoruutuY + 2]->getVari();
+			if (lahtoruudunNappulanVari == tuloruudunNappulanVari) {
+			}
+			if (lahtoruudunNappulanVari != tuloruudunNappulanVari) {
+				lista.push_back(Siirto(*ruutu, Ruutu(lahtoruutuX + 1, lahtoruutuY + 2)));
+			}
+		}
+	}
+	if (lahtoruutuX + 1 < 8 && lahtoruutuY - 2 >= 0) {
+		if (asema->_lauta[lahtoruutuX + 1][lahtoruutuY - 2] == NULL) {
+			lista.push_back(Siirto(*ruutu, Ruutu(lahtoruutuX + 1, lahtoruutuY - 2)));
+		}
+		else if (asema->_lauta[lahtoruutuX + 1][lahtoruutuY - 2] != NULL) {
+			tuloruudunNappulanVari = asema->_lauta[lahtoruutuX + 1][lahtoruutuY - 2]->getVari();
+			if (lahtoruudunNappulanVari == tuloruudunNappulanVari) {
+			}
+			if (lahtoruudunNappulanVari != tuloruudunNappulanVari) {
+				lista.push_back(Siirto(*ruutu, Ruutu(lahtoruutuX + 1, lahtoruutuY - 2)));
+			}
+		}
+	}
+	if (lahtoruutuX - 1 >= 0 && lahtoruutuY + 2 < 8) {
+		if (asema->_lauta[lahtoruutuX - 1][lahtoruutuY + 2] == NULL) {
+			lista.push_back(Siirto(*ruutu, Ruutu(lahtoruutuX - 1, lahtoruutuY + 2)));
+		}
+		else if (asema->_lauta[lahtoruutuX - 1][lahtoruutuY + 2] != NULL) {
+			tuloruudunNappulanVari = asema->_lauta[lahtoruutuX - 1][lahtoruutuY + 2]->getVari();
+			if (lahtoruudunNappulanVari == tuloruudunNappulanVari) {
+			}
+			if (lahtoruudunNappulanVari != tuloruudunNappulanVari) {
+				lista.push_back(Siirto(*ruutu, Ruutu(lahtoruutuX - 1, lahtoruutuY + 2)));
+			}
+		}
+	}
+	if (lahtoruutuX - 1 >= 0 && lahtoruutuY - 2 >= 0) {
+		if (asema->_lauta[lahtoruutuX - 1][lahtoruutuY - 2] == NULL) {
+			lista.push_back(Siirto(*ruutu, Ruutu(lahtoruutuX - 1, lahtoruutuY - 2)));
+		}
+		else if (asema->_lauta[lahtoruutuX - 1][lahtoruutuY - 2] != NULL) {
+			tuloruudunNappulanVari = asema->_lauta[lahtoruutuX - 1][lahtoruutuY - 2]->getVari();
+			if (lahtoruudunNappulanVari == tuloruudunNappulanVari) {
+			}
+			if (lahtoruudunNappulanVari != tuloruudunNappulanVari) {
+				lista.push_back(Siirto(*ruutu, Ruutu(lahtoruutuX - 1, lahtoruutuY - 2)));
+			}
+		}
+	}
+	if (lahtoruutuX + 2 < 8 && lahtoruutuY + 1 < 8) {
+		if (asema->_lauta[lahtoruutuX + 2][lahtoruutuY + 1] == NULL) {
+			lista.push_back(Siirto(*ruutu, Ruutu(lahtoruutuX + 2, lahtoruutuY + 1)));
+		}
+		else if (asema->_lauta[lahtoruutuX + 2][lahtoruutuY + 1] != NULL) {
+			tuloruudunNappulanVari = asema->_lauta[lahtoruutuX + 2][lahtoruutuY + 1]->getVari();
+			if (lahtoruudunNappulanVari == tuloruudunNappulanVari) {
+			}
+			if (lahtoruudunNappulanVari != tuloruudunNappulanVari) {
+				lista.push_back(Siirto(*ruutu, Ruutu(lahtoruutuX + 2, lahtoruutuY + 1)));
+			}
+		}
+	}
+	if (lahtoruutuX + 2 < 8 && lahtoruutuY - 1 >= 0) {
+		if (asema->_lauta[lahtoruutuX + 2][lahtoruutuY - 1] == NULL) {
+			lista.push_back(Siirto(*ruutu, Ruutu(lahtoruutuX + 2, lahtoruutuY - 1)));
+		}
+		else if (asema->_lauta[lahtoruutuX + 2][lahtoruutuY - 1] != NULL) {
+			tuloruudunNappulanVari = asema->_lauta[lahtoruutuX + 2][lahtoruutuY - 1]->getVari();
+			if (lahtoruudunNappulanVari == tuloruudunNappulanVari) {
+			}
+			if (lahtoruudunNappulanVari != tuloruudunNappulanVari) {
+				lista.push_back(Siirto(*ruutu, Ruutu(lahtoruutuX + 2, lahtoruutuY - 1)));
+			}
+		}
+	}
+	if (lahtoruutuX - 2 >= 0 && lahtoruutuY + 1 < 8) {
+		if (asema->_lauta[lahtoruutuX - 2][lahtoruutuY + 1] == NULL) {
+			lista.push_back(Siirto(*ruutu, Ruutu(lahtoruutuX - 2, lahtoruutuY + 1)));
+		}
+		else if (asema->_lauta[lahtoruutuX - 2][lahtoruutuY + 1] != NULL) {
+			tuloruudunNappulanVari = asema->_lauta[lahtoruutuX - 2][lahtoruutuY + 1]->getVari();
+			if (lahtoruudunNappulanVari == tuloruudunNappulanVari) {
+			}
+			if (lahtoruudunNappulanVari != tuloruudunNappulanVari) {
+				lista.push_back(Siirto(*ruutu, Ruutu(lahtoruutuX - 2, lahtoruutuY + 1)));
+			}
+		}
+	}
+	if (lahtoruutuX - 2 >= 0 && lahtoruutuY - 1 >= 0) {
+		if (asema->_lauta[lahtoruutuX - 2][lahtoruutuY - 1] == NULL) {
+			lista.push_back(Siirto(*ruutu, Ruutu(lahtoruutuX - 2, lahtoruutuY - 1)));
+		}
+		else if (asema->_lauta[lahtoruutuX - 2][lahtoruutuY - 1] != NULL) {
+			tuloruudunNappulanVari = asema->_lauta[lahtoruutuX - 2][lahtoruutuY - 1]->getVari();
+			if (lahtoruudunNappulanVari == tuloruudunNappulanVari) {
+			}
+			if (lahtoruudunNappulanVari != tuloruudunNappulanVari) {
+				lista.push_back(Siirto(*ruutu, Ruutu(lahtoruutuX - 2, lahtoruutuY - 1)));
+			}
+		}
+	}
 }
 
 
@@ -94,19 +199,116 @@ void Lahetti::annaSiirrot(std::list<Siirto>& lista, Ruutu* ruutu, Asema* asema, 
 
 void Daami::annaSiirrot(std::list<Siirto>& lista, Ruutu* ruutu, Asema* asema, int vari)
 {
-	
+	Lahetti::annaSiirrot(lista, ruutu, asema, vari);
+	Torni::annaSiirrot(lista, ruutu, asema, vari);
 }
 
 
 void Kuningas::annaSiirrot(std::list<Siirto>& lista, Ruutu* ruutu, Asema* asema, int vari)
 {
-	/*perusidea on ett‰ kaikki viereiset ruudut ovat sallittuja. kuten tornilla ja l‰hetill‰,
-	oman nappulan p‰‰lle ei voi menn‰ ja vastustajan nappulan voi syˆd‰.
+	int lahtoruutuY = ruutu->getRivi(), lahtoruutuX = ruutu->getSarake(), lahtoruudunNappulanVari, tuloruudunNappulanVari;
+	lahtoruudunNappulanVari = asema->_lauta[lahtoruutuX][lahtoruutuY]->getVari();
+	if (lahtoruutuX + 1 < 8) {
+		if (asema->_lauta[lahtoruutuX + 1][lahtoruutuY] == NULL) {
+			lista.push_back(Siirto(*ruutu, Ruutu(lahtoruutuX + 1, lahtoruutuY)));
+		}
+		else if (asema->_lauta[lahtoruutuX + 1][lahtoruutuY] != NULL) {
+			tuloruudunNappulanVari = asema->_lauta[lahtoruutuX + 1][lahtoruutuY]->getVari();
+			if (lahtoruudunNappulanVari != tuloruudunNappulanVari) {
+				lista.push_back(Siirto(*ruutu, Ruutu(lahtoruutuX + 1, lahtoruutuY)));
+			}
+		}
+	}
 
-	Kaikki muu kuninkaaseen liittyv‰ tarkistus tehd‰‰n eri paikassa*/
+	if (lahtoruutuX + 1 < 8 && lahtoruutuY + 1 < 8) {
+		if (asema->_lauta[lahtoruutuX + 1][lahtoruutuY + 1] == NULL) {
+			lista.push_back(Siirto(*ruutu, Ruutu(lahtoruutuX + 1, lahtoruutuY + 1)));
 
+		}
+		else if (asema->_lauta[lahtoruutuX + 1][lahtoruutuY + 1] != NULL) {
+			tuloruudunNappulanVari = asema->_lauta[lahtoruutuX + 1][lahtoruutuY + 1]->getVari();
+			if (lahtoruudunNappulanVari != tuloruudunNappulanVari) {
+				lista.push_back(Siirto(*ruutu, Ruutu(lahtoruutuX + 1, lahtoruutuY + 1)));
 
-	
+			}
+		}
+	}
+
+	if (lahtoruutuX + 1 < 8 && lahtoruutuY - 1 >= 0) {
+		if (asema->_lauta[lahtoruutuX + 1][lahtoruutuY - 1] == NULL) {
+			lista.push_back(Siirto(*ruutu, Ruutu(lahtoruutuX + 1, lahtoruutuY - 1)));
+
+		}
+		else if (asema->_lauta[lahtoruutuX + 1][lahtoruutuY - 1] != NULL) {
+			tuloruudunNappulanVari = asema->_lauta[lahtoruutuX + 1][lahtoruutuY - 1]->getVari();
+			if (lahtoruudunNappulanVari != tuloruudunNappulanVari) {
+				lista.push_back(Siirto(*ruutu, Ruutu(lahtoruutuX + 1, lahtoruutuY - 1)));
+
+			}
+		}
+	}
+
+	if (lahtoruutuX - 1 >= 0) {
+		if (asema->_lauta[lahtoruutuX - 1][lahtoruutuY] == NULL) {
+			lista.push_back(Siirto(*ruutu, Ruutu(lahtoruutuX - 1, lahtoruutuY)));
+		}
+		else if (asema->_lauta[lahtoruutuX - 1][lahtoruutuY] != NULL) {
+			tuloruudunNappulanVari = asema->_lauta[lahtoruutuX - 1][lahtoruutuY]->getVari();
+			if (lahtoruudunNappulanVari != tuloruudunNappulanVari) {
+				lista.push_back(Siirto(*ruutu, Ruutu(lahtoruutuX - 1, lahtoruutuY)));
+			}
+		}
+	}
+
+	if (lahtoruutuX - 1 >= 0 && lahtoruutuY + 1 < 8) {
+		if (asema->_lauta[lahtoruutuX - 1][lahtoruutuY + 1] == NULL) {
+			lista.push_back(Siirto(*ruutu, Ruutu(lahtoruutuX - 1, lahtoruutuY + 1)));
+		}
+		else if (asema->_lauta[lahtoruutuX - 1][lahtoruutuY + 1] != NULL) {
+			tuloruudunNappulanVari = asema->_lauta[lahtoruutuX - 1][lahtoruutuY + 1]->getVari();
+			if (lahtoruudunNappulanVari != tuloruudunNappulanVari) {
+
+				lista.push_back(Siirto(*ruutu, Ruutu(lahtoruutuX - 1, lahtoruutuY + 1)));
+
+			}
+		}
+	}
+
+	if (lahtoruutuX - 1 >= 0 && lahtoruutuY - 1 >= 0) {
+		if (asema->_lauta[lahtoruutuX - 1][lahtoruutuY - 1] == NULL) {
+			lista.push_back(Siirto(*ruutu, Ruutu(lahtoruutuX - 1, lahtoruutuY - 1)));
+		}
+		else if (asema->_lauta[lahtoruutuX - 1][lahtoruutuY - 1] != NULL) {
+			tuloruudunNappulanVari = asema->_lauta[lahtoruutuX - 1][lahtoruutuY - 1]->getVari();
+			if (lahtoruudunNappulanVari != tuloruudunNappulanVari) {
+				lista.push_back(Siirto(*ruutu, Ruutu(lahtoruutuX - 1, lahtoruutuY - 1)));
+			}
+		}
+	}
+
+	if (lahtoruutuY + 1 < 8) {
+		if (asema->_lauta[lahtoruutuX][lahtoruutuY + 1] == NULL) {
+			lista.push_back(Siirto(*ruutu, Ruutu(lahtoruutuX, lahtoruutuY + 1)));
+		}
+		else if (asema->_lauta[lahtoruutuX][lahtoruutuY + 1] != NULL) {
+			tuloruudunNappulanVari = asema->_lauta[lahtoruutuX][lahtoruutuY + 1]->getVari();
+			if (lahtoruudunNappulanVari != tuloruudunNappulanVari) {
+				lista.push_back(Siirto(*ruutu, Ruutu(lahtoruutuX, lahtoruutuY + 1)));
+			}
+		}
+	}
+
+	if (lahtoruutuY - 1 >= 0) {
+		if (asema->_lauta[lahtoruutuX][lahtoruutuY - 1] == NULL) {
+			lista.push_back(Siirto(*ruutu, Ruutu(lahtoruutuX, lahtoruutuY - 1)));
+		}
+		else if (asema->_lauta[lahtoruutuX][lahtoruutuY - 1] != NULL) {
+			tuloruudunNappulanVari = asema->_lauta[lahtoruutuX][lahtoruutuY - 1]->getVari();
+			if (lahtoruudunNappulanVari != tuloruudunNappulanVari) {
+				lista.push_back(Siirto(*ruutu, Ruutu(lahtoruutuX, lahtoruutuY - 1)));
+			}
+		}
+	}
 }
 
 
