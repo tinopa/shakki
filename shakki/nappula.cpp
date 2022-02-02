@@ -215,6 +215,7 @@ void Lahetti::annaSiirrot(std::list<Siirto>& lista, Ruutu* ruutu, Asema* asema, 
 					if (asema->_lauta[r.getSarake()][r.getRivi()]->getVari() != vari) {
 						//ruudulla on vastustajan nappula, siihen voidaan siirtyä
 						lista.push_back(Siirto(*ruutu, r));
+						vapaaYlaOikea = false;
 					}
 					else {
 						//ruudulla on oma nappula, ei voi siirtyä
@@ -236,8 +237,10 @@ void Lahetti::annaSiirrot(std::list<Siirto>& lista, Ruutu* ruutu, Asema* asema, 
 					lista.push_back(Siirto(*ruutu, r));
 
 				else if (asema->_lauta[r.getSarake()][r.getRivi()] != NULL) {
-					if (asema->_lauta[r.getSarake()][r.getRivi()]->getVari() != vari)
+					if (asema->_lauta[r.getSarake()][r.getRivi()]->getVari() != vari) {
 						lista.push_back(Siirto(*ruutu, r));
+						vapaaYlaVasen = false;
+					}
 					else
 						vapaaYlaVasen = false;
 				}
@@ -254,8 +257,10 @@ void Lahetti::annaSiirrot(std::list<Siirto>& lista, Ruutu* ruutu, Asema* asema, 
 					lista.push_back(Siirto(*ruutu, r));
 
 				else if (asema->_lauta[r.getSarake()][r.getRivi()] != NULL) {
-					if (asema->_lauta[r.getSarake()][r.getRivi()]->getVari() != vari)
+					if (asema->_lauta[r.getSarake()][r.getRivi()]->getVari() != vari) {
 						lista.push_back(Siirto(*ruutu, r));
+						vapaaYlaOikea = false;
+					}
 					else
 						vapaaAlaOikea = false;
 				}
@@ -272,8 +277,10 @@ void Lahetti::annaSiirrot(std::list<Siirto>& lista, Ruutu* ruutu, Asema* asema, 
 					lista.push_back(Siirto(*ruutu, r));
 
 				else if (asema->_lauta[r.getSarake()][r.getRivi()] != NULL) {
-					if (asema->_lauta[r.getSarake()][r.getRivi()]->getVari() != vari)
+					if (asema->_lauta[r.getSarake()][r.getRivi()]->getVari() != vari) {
 						lista.push_back(Siirto(*ruutu, r));
+						vapaaAlaVasen = false;
+					}
 					else
 						vapaaAlaVasen = false;
 				}
