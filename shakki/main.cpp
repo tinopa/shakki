@@ -30,7 +30,7 @@ int main()
 		wcout << "\n";
 		// Tarkasta onko peli loppu?
 		asema.annaLaillisetSiirrot(lista);
-		if (lista.size() == 0) {
+		/*if (lista.size() == 0) {
 			lopetus = 0;
 			std::wcout << "Peli loppui";
 			continue;
@@ -49,7 +49,11 @@ int main()
 		else {
 			siirto = Kayttoliittyma::getInstance()->
 				annaVastustajanSiirto();
-		}
+		}*/
+
+		//viikko 2 testaus
+		Siirto siirto;
+		siirto = Kayttoliittyma::getInstance()->annaVastustajanSiirto();
 		asema.paivitaAsema(&siirto);
 	}
 
