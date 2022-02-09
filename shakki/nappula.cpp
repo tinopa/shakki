@@ -295,8 +295,8 @@ void Lahetti::annaSiirrot(std::list<Siirto>& lista, Ruutu* ruutu, Asema* asema, 
 
 void Daami::annaSiirrot(std::list<Siirto>& lista, Ruutu* ruutu, Asema* asema, int vari)
 {
-	Torni::annaSiirrot(lista, ruutu, asema, vari);
-	Lahetti::annaSiirrot(lista, ruutu, asema, vari);
+	this->Torni::annaSiirrot(lista, ruutu, asema, vari);
+	this->Lahetti::annaSiirrot(lista, ruutu, asema, vari);
 }
 
 
@@ -459,5 +459,38 @@ void Sotilas::annaSiirrot(std::list<Siirto>& lista, Ruutu* ruutu, Asema* asema, 
 
 
 void Sotilas::lisaaSotilaanKorotukset(Siirto* siirto, std::list<Siirto>& lista, Asema* asema) {
-	
+	// valkea korottaa
+	if (siirto->getLoppuruutu().getRivi() == 7) {
+		siirto->_miksikorotetaan = asema->vd;
+		lista.push_back(*siirto);
+
+		Siirto torniksi = *siirto;
+		torniksi._miksikorotetaan = asema->vt;
+		lista.push_back(torniksi);
+
+		Siirto lahetiksi = *siirto;
+		lahetiksi._miksikorotetaan = asema->vl;
+		lista.push_back(lahetiksi);
+
+		Siirto ratsuksi = *siirto;
+		ratsuksi._miksikorotetaan = asema->vr;
+		lista.push_back(ratsuksi);
+	}
+	// musta korottaa
+	else if (siirto->getLoppuruutu().getRivi() == 0) {
+		siirto->_miksikorotetaan = asema->md;
+		lista.push_back(*siirto);
+
+		Siirto torniksi = *siirto;
+		torniksi._miksikorotetaan = asema->mt;
+		lista.push_back(torniksi);
+
+		Siirto lahetiksi = *siirto;
+		lahetiksi._miksikorotetaan = asema->ml;
+		lista.push_back(lahetiksi);
+
+		Siirto ratsuksi = *siirto;
+		ratsuksi._miksikorotetaan = asema->mr;
+		lista.push_back(ratsuksi);
+	}
 }

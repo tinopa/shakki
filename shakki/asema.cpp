@@ -118,19 +118,23 @@ void Asema::paivitaAsema(Siirto* siirto)
 		loppuSarakeInt = siirto->getLoppuruutu().getSarake();
 
 		// Tarkistetaan oliko sotilaan kaksoisaskel
-		// (asetetaan kaksoisaskel-lippu)
-
+		if (nappulaKoodi == VS || nappulaKoodi == MS)
+			if ((abs(alkuRiviInt - loppuRiviInt)) == 2)
+			{
+				// (asetetaan kaksoisaskel-lippu)
+				kaksoisaskelSarakkeella = alkuSarakeInt;
+			}
 		// Ohestalyönti on tyhjään ruutuun. Vieressä oleva (sotilas) poistetaan.
-		if (nappulaKoodi == VS || nappulaKoodi == MS) {
-			//// Katsotaan jos nappula on sotilas ja rivi on päätyrivi niin ei vaihdeta nappulaa 
-			////eli alkuruutuun laitetaan null ja loppuruudussa on jo kliittymän laittama nappula MIIKKA, ei taida minmaxin kanssa hehkua?
-
-		}
+		if (nappulaKoodi == VS || nappulaKoodi == MS)
+			_lauta[alkuRiviInt][loppuSarakeInt] = NULL;
 		////muissa tapauksissa alkuruutuun null ja loppuruutuun sama alkuruudusta lähtenyt nappula
 		//else {
 		_lauta[alkuSarakeInt][alkuRiviInt] = NULL;
 		_lauta[loppuSarakeInt][loppuRiviInt] = nappula;
 		//}
+		if (siirto->_miksikorotetaan != NULL)
+			_lauta[loppuRiviInt][loppuSarakeInt] = siirto->_miksikorotetaan;
+
 		// katsotaan jos liikkunut nappula on kuningas niin muutetaan onkoKuningasLiikkunut arvo (molemmille väreille)
 		if (nappulaKoodi == VK)
 			_onkoValkeaKuningasLiikkunut = true;
