@@ -452,6 +452,7 @@ void Asema::annaLaillisetSiirrot(std::list<Siirto>& lista) {
 				this->_lauta[i][j]->annaSiirrot(lista, &Ruutu(i, j), this, _siirtovuoro);
 		}
 	}
+	huolehdiKuninkaanShakeista(lista, _siirtovuoro);
 	annaLinnoitusSiirrot(lista, _siirtovuoro);
 
 }
