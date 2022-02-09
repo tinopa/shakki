@@ -373,12 +373,50 @@ void Asema::huolehdiKuninkaanShakeista(std::list<Siirto>& lista, int vari)
 
 }
 
+void Asema::annaLinnoitusSiirrot(std::list<Siirto>& lista, int vari) {
+	if (vari == 0) {
+		if (!_onkoValkeaKuningasLiikkunut && !onkoRuutuUhattu(&Ruutu(4, 0), 1)) {
+			//valkea kuningas ei ole liikkunut eikä ole shakissa
+
+			//pitkä linna
+			if (!_onkoValkeaDTliikkunut)
+				if (_lauta[1][0] == NULL && _lauta[2][0] == NULL && _lauta[3][0] == NULL)
+					if (!onkoRuutuUhattu(&Ruutu(2, 0), 1) && !onkoRuutuUhattu(&Ruutu(3, 0), 1))
+						lista.push_back(Siirto(false, true));
+
+			//lyhyt linna
+			if (!_onkoValkeaKTliikkunut)
+				if (_lauta[5][0] == NULL && _lauta[6][0] == NULL)
+					if (!onkoRuutuUhattu(&Ruutu(5, 0), 1) && !onkoRuutuUhattu(&Ruutu(6, 0), 1))
+						lista.push_back(Siirto(true, false));
+		}
+	}
+	else {
+		if (!_onkoMustaKuningasLiikkunut && !onkoRuutuUhattu(&Ruutu(4, 7), 0)) {
+			//musta kuningas ei ole liikkunut eikä ole shakissa
+
+			//pitkä linna
+			if (!_onkoMustaDTliikkunut)
+				if (_lauta[1][0] == NULL && _lauta[2][7] == NULL && _lauta[3][7] == NULL)
+					if (!onkoRuutuUhattu(&Ruutu(2, 7), 0) && !onkoRuutuUhattu(&Ruutu(3, 7), 0))
+						lista.push_back(Siirto(false, true));
+
+			//lyhyt linna
+			if (!_onkoMustaKTliikkunut)
+				if (_lauta[5][0] == NULL && _lauta[6][7] == NULL)
+					if (!onkoRuutuUhattu(&Ruutu(5, 7), 0) && !onkoRuutuUhattu(&Ruutu(6, 7), 0))
+						lista.push_back(Siirto(true, false));
+		}
+	}
+}
 
 void Asema::annaLaillisetSiirrot(std::list<Siirto>& lista) {
+	//raakasiirrot
 	for (int i = 0; i < 8; i++) {
 		for (int j = 0; j < 8; j++) {
 			if (this->_lauta[i][j] != NULL)
 				this->_lauta[i][j]->annaSiirrot(lista, &Ruutu(i, j), this, _lauta[i][j]->getVari());
 		}
 	}
+
 }
