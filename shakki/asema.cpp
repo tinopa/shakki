@@ -349,7 +349,21 @@ MinMaxPaluu Asema::mini(int syvyys)
 
 bool Asema::onkoRuutuUhattu(Ruutu* ruutu, int vastustajanVari)
 {
-
+	std::list<Siirto> vastustajaSiirrotLista;
+	//V‰reitt‰in k‰yd‰‰n l‰pi kaikki ruudut ja niiss‰ olevan nappulan siirrot ker‰t‰‰n vastustajan siirtolistaan
+	for (int i = 0; i < 8; i++) {
+		for (int j = 0; j < 8; j++) {
+			if (this->_lauta[i][j] == NULL)
+				continue;
+			if (this->_lauta[i][j]->getVari() == vastustajanVari)
+				this->_lauta[i][j]->annaSiirrot(vastustajaSiirrotLista, &Ruutu(i, j), this, vastustajanVari);
+		}
+	}
+	// K‰yd‰‰n vastustajaSiirtoLista l‰pi ja jos sielt‰ lˆytyy tarkasteltava ruutu niin tiedet‰‰n sen olevan uhattu
+	for (Siirto s : vastustajaSiirrotLista) {
+		if (ruutu->getSarake() == s.getLoppuruutu().getSarake() && ruutu->getRivi() == s.getLoppuruutu().getRivi())
+			return true;
+	}
 	return false;
 }
 
@@ -363,8 +377,8 @@ void Asema::huolehdiKuninkaanShakeista(std::list<Siirto>& lista, int vari)
 void Asema::annaLaillisetSiirrot(std::list<Siirto>& lista) {
 	for (int i = 0; i < 8; i++) {
 		for (int j = 0; j < 8; j++) {
-			if (_lauta[i][j] != NULL)
-				_lauta[i][j]->annaSiirrot(lista, &Ruutu(i, j), this, _lauta[i][j]->getVari());
+			if (this->_lauta[i][j] != NULL)
+				this->_lauta[i][j]->annaSiirrot(lista, &Ruutu(i, j), this, _lauta[i][j]->getVari());
 		}
 	}
 }
