@@ -422,11 +422,11 @@ void Sotilas::annaSiirrot(std::list<Siirto>& lista, Ruutu* ruutu, Asema* asema, 
 			//katsontaan onko mahdollista mennä kaksi ruutua eteenpäin
 			if (ruutu->getRivi() == 1 && asema->_lauta[r.getSarake()][r.getRivi() + 1] == NULL)
 				lista.push_back(Siirto(*ruutu, Ruutu(r.getSarake(), r.getRivi() + 1)));
-			//katsotaan onko edessä oikealla vastustajan nappulaa
-			if (asema->_lauta[r.getSarake() + 1][r.getRivi()] != NULL && asema->_lauta[r.getSarake() + 1][r.getRivi()]->getVari() != vari)
+			//katsotaan onko edessä oikealla vastustajan nappulaa. Tarkistaa ensin onko oikealla lautaa jäljellä
+			if (r.getSarake() + 1 < 8 && asema->_lauta[r.getSarake() + 1][r.getRivi()] != NULL && asema->_lauta[r.getSarake() + 1][r.getRivi()]->getVari() != vari)
 				lista.push_back(Siirto(*ruutu, Ruutu(r.getSarake() + 1, r.getRivi())));
-			//katsontaan onko edessä vasemmalla vastustajan palikkaa
-			if (asema->_lauta[r.getSarake() - 1][r.getRivi()] != NULL && asema->_lauta[r.getSarake() - 1][r.getRivi()]->getVari() != vari)
+			//katsontaan onko edessä vasemmalla vastustajan palikkaa. Tarkistaa ensin onko vasemmalla lautaa jäljellä
+			if (r.getSarake() - 1 >= 0 && asema->_lauta[r.getSarake() - 1][r.getRivi()] != NULL && asema->_lauta[r.getSarake() - 1][r.getRivi()]->getVari() != vari)
 				lista.push_back(Siirto(*ruutu, Ruutu(r.getSarake() - 1, r.getRivi())));
 		}
 		else {
@@ -445,10 +445,10 @@ void Sotilas::annaSiirrot(std::list<Siirto>& lista, Ruutu* ruutu, Asema* asema, 
 			if (ruutu->getRivi() == 1 && asema->_lauta[r.getSarake()][r.getRivi() - 1] == NULL)
 				lista.push_back(Siirto(*ruutu, Ruutu(r.getSarake(), r.getRivi() - 1)));
 			//katsotaan onko edessä oikealla vastustajan nappulaa
-			if (asema->_lauta[r.getSarake() + 1][r.getRivi()] != NULL && asema->_lauta[r.getSarake() + 1][r.getRivi()]->getVari() != vari)
+			if (r.getSarake() + 1 < 8 && asema->_lauta[r.getSarake() + 1][r.getRivi()] != NULL && asema->_lauta[r.getSarake() + 1][r.getRivi()]->getVari() != vari)
 				lista.push_back(Siirto(*ruutu, Ruutu(r.getSarake() + 1, r.getRivi())));
 			//katsontaan onko edessä vasemmalla vastustajan palikkaa
-			if (asema->_lauta[r.getSarake() - 1][r.getRivi()] != NULL && asema->_lauta[r.getSarake() - 1][r.getRivi()]->getVari() != vari)
+			if (r.getSarake() - 1 >= 0 && asema->_lauta[r.getSarake() - 1][r.getRivi()] != NULL && asema->_lauta[r.getSarake() - 1][r.getRivi()]->getVari() != vari)
 				lista.push_back(Siirto(*ruutu, Ruutu(r.getSarake() - 1, r.getRivi())));
 		}
 		else {

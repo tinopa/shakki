@@ -375,36 +375,91 @@ bool Asema::onkoRuutuUhattu(Ruutu* ruutu, int vastustajanVari)
 void Asema::huolehdiKuninkaanShakeista(std::list<Siirto>& lista, int vari)
 {
 	int kX, kY; //kuninkaan koodinaatit
+	int vastustajanVari;
 
 	if (vari == 0) {
-		for(int i = 0; i < 8; i++)
-			for(int j = 0; i < 8; j++)
+		vastustajanVari = 1;
+		for (int i = 0; i < 8; i++)
+			for (int j = 0; j < 8; j++) {
+				if (_lauta[i][j] == NULL)
+					continue;
 				if (_lauta[i][j]->getKoodi() == VK) {
 					kX = i;
 					kY = j;
+					break;
 				}
+			}
 	}
 	else {
+		vastustajanVari = 0;
 		for (int i = 0; i < 8; i++)
-			for (int j = 0; i < 8; j++)
+			for (int j = 0; j < 8; j++) {
+				if (_lauta[i][j] == NULL)
+					continue;
 				if (_lauta[i][j]->getKoodi() == MK) {
 					kX = i;
 					kY = j;
+					break;
 				}
+			}
 	}
 
-	for (Siirto s : lista) {
-		if (s.getAlkuruutu().getSarake() == kX && s.getAlkuruutu().getRivi() == kY) {
-			//siirrossa siirret‰‰n kuningasta
-			Asema temp = *this;									//otetaan asemasta kopio
-			std::list<Siirto> vastustajaSiirtoLista;
-			temp.paivitaAsema(&s);								//tehd‰‰n siirto kopioasemassa
-			temp.annaLaillisetSiirrot(vastustajaSiirtoLista);	//otetaan vastustajan uudet siirrot talteen kopioasemasta
-			for (Siirto vs : vastustajaSiirtoLista)				//k‰yd‰‰n kaikki vastustajan siirrot l‰pi
-				if (vs.getLoppuruutu().getSarake() == s.getLoppuruutu().getSarake() && vs.getLoppuruutu().getRivi() == s.getLoppuruutu().getRivi())
-					lista.remove(s);							//jos mik‰‰n vastustajan siirron loppuruutu on sama, kuin kuninkaan siirron loppuruutu,
-		}														//poistetaan se laillisten siirtojen listasta
+	//1. versio ei toimi, koska lista.remove(s) ei toimi ilma == overloadausta
+	//for (Siirto s : lista) {
+	//	if (s.getAlkuruutu().getSarake() == kX && s.getAlkuruutu().getRivi() == kY) {
+	//		//siirrossa siirret‰‰n kuningasta
+	//		Asema temp = *this;									//otetaan asemasta kopio
+	//		std::list<Siirto> vastustajaSiirtoLista;
+	//		temp.paivitaAsema(&s);								//tehd‰‰n siirto kopioasemassa
+	//		temp.annaLaillisetSiirrot(vastustajaSiirtoLista);	//otetaan vastustajan uudet siirrot talteen kopioasemasta
+	//		for (Siirto vs : vastustajaSiirtoLista)				//k‰yd‰‰n kaikki vastustajan siirrot l‰pi
+	//			if (vs.getLoppuruutu().getSarake() == s.getLoppuruutu().getSarake() && vs.getLoppuruutu().getRivi() == s.getLoppuruutu().getRivi())
+	//				lista.remove(s);							//jos mik‰‰n vastustajan siirron loppuruutu on sama, kuin kuninkaan siirron loppuruutu,
+	//	}														//poistetaan se laillisten siirtojen listasta
+	//}
+
+	//2. versio tuntivideosta
+	Asema testiAsema;
+	std::list<Siirto> siivottuSiirrotLista;
+	for (auto s : lista) {
+		testiAsema = *this;
+		testiAsema.paivitaAsema(&s);
+		int x, y;
+
+		//kuninkaan siirto?
+		if (s.onkoLyhytLinna()) {
+			x = 6;
+			if (this->_siirtovuoro == 0)
+				y = 0;
+			else
+				y = 7;
+		}
+		else if(s.onkoPitk‰linna()){
+			x = 2;
+			if (this->_siirtovuoro == 0)
+				y = 0;
+			else
+				y = 7;
+		}
+		else {
+			Nappula* siirtyva = this->_lauta[s.getAlkuruutu().getSarake()][s.getAlkuruutu().getRivi()];
+			if (siirtyva->getKoodi() == VK || siirtyva->getKoodi() == MK) {
+				x = s.getLoppuruutu().getSarake();
+				y = s.getLoppuruutu().getRivi();
+			}
+			else {
+				//Ei ole, kuninkaan sijainti sama kuin ennen siirron s kokeilua
+				x = kX;
+				y = kY;
+			}
+		}
+
+		//huom !vari
+		if (!testiAsema.onkoRuutuUhattu(&Ruutu(x, y), vastustajanVari))
+			siivottuSiirrotLista.push_back(s);
+
 	}
+	lista = siivottuSiirrotLista;
 }
 
 void Asema::annaLinnoitusSiirrot(std::list<Siirto>& lista, int vari) {
