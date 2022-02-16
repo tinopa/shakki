@@ -228,11 +228,12 @@ vai olla est‰m‰ss‰ vastustajan korotusta siksi ei oteta kantaa
 */
 double Asema::evaluoi()
 {
-	return 0;
 
 	//kertoimet asetettu sen takia ett‰ niiden avulla asioiden painoarvoa voidaan s‰‰t‰‰ helposti yhdest‰ paikasta
 
 	//1. Nappuloiden arvo
+	//positiiviset arvot tarkoittavat sit‰, ett‰ valkoisilla on etu. Neg. arvot tarkoittavat, ett‰ mustalla on etu
+	double arvojenErotus = laskeNappuloidenArvo(0) - laskeNappuloidenArvo(1);
 
 	//2. Kuningas turvassa
 
@@ -240,6 +241,8 @@ double Asema::evaluoi()
 
 	// 4. Arvosta linjoja
 
+
+	return arvojenErotus * 1; //t‰h‰n voi tulevaisuudessa lis‰t‰ muiden vaiheiden tuloksia ja muuttaa kertoimia
 }
 
 
