@@ -245,8 +245,45 @@ double Asema::evaluoi()
 
 double Asema::laskeNappuloidenArvo(int vari)
 {
-	return 0;
+	double arvoSumma = 0;
 
+	const double daami	= 9;
+	const double torni = 5;
+	const double lahetti = 3.25;
+	const double ratsu = 3;
+	const double sotilas = 1;
+
+	for (int i = 0; i < 8; i++) {
+		for (int j = 0; j < 8; j++) {
+			if (_lauta[i][j]->getVari() == vari) {
+				switch (_lauta[i][j]->getKoodi()){
+
+				case VT:
+				case MT:
+					arvoSumma += torni;
+					break;
+				case VR:
+				case MR:
+					arvoSumma += ratsu;
+					break;
+				case VL:
+				case ML:
+					arvoSumma += lahetti;
+					break;
+				case VD:
+				case MD:
+					arvoSumma += daami;
+					break;
+				case VS:
+				case MS:
+					arvoSumma += sotilas;
+					break;
+				}
+			}
+		}
+	}
+
+	return arvoSumma;
 }
 
 
