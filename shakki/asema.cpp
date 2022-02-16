@@ -364,18 +364,39 @@ MinMaxPaluu Asema::minimax(int syvyys)
 {
 	MinMaxPaluu paluuarvo;
 
-	// Generoidaan aseman lailliset siirrot.
+	std::list<Siirto> siirrot;
+	annaLaillisetSiirrot(siirrot);
 
-	// Rekursion kantatapaus 1: peli on loppu
+	if (siirrot.size() == 0)
+	{
+		paluuarvo._evaluointiArvo = 0;
+		return paluuarvo;
+	}
 
-	// Rekursion kantatapaus 2: katkaisusyvyydessä
+	if (syvyys == 0)
+	{
+		paluuarvo._evaluointiArvo = evaluoi();
+		return paluuarvo;
+	}
 
-	// Rekursioaskel: kokeillaan jokaista laillista siirtoa s
-	// (alustetaan paluuarvo huonoimmaksi mahdolliseksi).
+	paluuarvo._evaluointiArvo = (_siirtovuoro == 0 ? INT_MIN : INT_MAX);
+	for (auto s : siirrot)
+	{
+		Asema uusi_asema = *this;
+		uusi_asema.paivitaAsema(&s);
 
+		MinMaxPaluu arvo = uusi_asema.minimax(syvyys - 1);
+
+		if
+			((_siirtovuoro == 0 && arvo._evaluointiArvo > paluuarvo._evaluointiArvo) ||
+				(_siirtovuoro == 1 && arvo._evaluointiArvo < paluuarvo._evaluointiArvo))
+		{
+			paluuarvo._evaluointiArvo = arvo._evaluointiArvo;
+			paluuarvo._parasSiirto = arvo._parasSiirto;
+		}
+	}
 	return paluuarvo;
 }
-
 
 MinMaxPaluu Asema::maxi(int syvyys)
 {
@@ -404,7 +425,7 @@ bool Asema::onkoRuutuUhattu(Ruutu* ruutu, int vastustajanVari)
 		}
 	}
 	// Käydään vastustajaSiirtoLista läpi ja jos sieltä löytyy tarkasteltava ruutu niin tiedetään sen olevan uhattu
-	for (Siirto s : vastustajaSiirrotLista) {
+	for (auto s : vastustajaSiirrotLista) {
 		if (ruutu->getSarake() == s.getLoppuruutu().getSarake() && ruutu->getRivi() == s.getLoppuruutu().getRivi())
 			return true;
 	}
