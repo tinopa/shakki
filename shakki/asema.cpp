@@ -258,7 +258,7 @@ double Asema::laskeNappuloidenArvo(int vari)
 
 	for (int i = 0; i < 8; i++) {
 		for (int j = 0; j < 8; j++) {
-			if (_lauta[i][j]->getVari() == vari) {
+			if (_lauta[i][j] != NULL && _lauta[i][j]->getVari() == vari) {
 				switch (_lauta[i][j]->getKoodi()){
 
 				case VT:
@@ -362,6 +362,7 @@ double Asema::linjat(int vari)
 //}
 MinMaxPaluu Asema::minimax(int syvyys)
 {
+	//turha funktio ainakin toistaiseksi
 	MinMaxPaluu paluuarvo;
 
 	std::list<Siirto> siirrot;
@@ -401,6 +402,59 @@ MinMaxPaluu Asema::minimax(int syvyys)
 MinMaxPaluu Asema::maxi(int syvyys)
 {
 	MinMaxPaluu paluu;
+	std::list<Siirto> lista;
+	this->annaLaillisetSiirrot(lista);
+	Ruutu kuningas;
+
+	
+	if (lista.size() == 0) {
+		//matti tai patti
+		//etsit‰‰n kuningas
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				if (_lauta[i][j] == NULL)
+					continue;
+				if (_lauta[i][j]->getKoodi() == VK) {
+					kuningas.setSarake(i);
+					kuningas.setRivi(j);
+					break;
+				}
+			}
+		}
+
+		//matti
+		if (!this->onkoRuutuUhattu(&kuningas, 1)) {
+			paluu._evaluointiArvo = -100000;
+			return paluu;
+		}
+		//patti
+		if (this->onkoRuutuUhattu(&kuningas, 1)) {
+			paluu._evaluointiArvo = 0;
+			return paluu;
+		}
+	}
+
+	//kantatapaus
+	if (syvyys == 0) {
+		paluu._evaluointiArvo = 0;
+		return paluu;
+	}
+
+	double max = -100000;
+	Siirto parasSiirto;
+
+	for (Siirto s : lista) {
+		Asema uusiAsema = *this;
+		uusiAsema.paivitaAsema(&s);
+		double evArvo = uusiAsema.mini(syvyys - 1)._evaluointiArvo;
+
+		if (evArvo > max) {
+			max = evArvo;
+			parasSiirto = s;
+		}
+	}
+	paluu._evaluointiArvo = max;
+	paluu._parasSiirto = parasSiirto;
 	return paluu;
 }
 
@@ -408,6 +462,59 @@ MinMaxPaluu Asema::maxi(int syvyys)
 MinMaxPaluu Asema::mini(int syvyys)
 {
 	MinMaxPaluu paluu;
+	std::list<Siirto> lista;
+	this->annaLaillisetSiirrot(lista);
+	Ruutu kuningas;
+
+
+	if (lista.size() == 0) {
+		//matti tai patti
+		//etsit‰‰n kuningas
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				if (_lauta[i][j] == NULL)
+					continue;
+				if (_lauta[i][j]->getKoodi() == MK) {
+					kuningas.setSarake(i);
+					kuningas.setRivi(j);
+					break;
+				}
+			}
+		}
+
+		//matti
+		if (!this->onkoRuutuUhattu(&kuningas, 0)) {
+			paluu._evaluointiArvo = 100000;
+			return paluu;
+		}
+		//patti
+		if (this->onkoRuutuUhattu(&kuningas, 0)) {
+			paluu._evaluointiArvo = 0;
+			return paluu;
+		}
+	}
+
+	//kantatapaus
+	if (syvyys == 0) {
+		paluu._evaluointiArvo = this->evaluoi();
+		return paluu;
+	}
+
+	double min = 100000;
+	Siirto parasSiirto;
+
+	for (Siirto s : lista) {
+		Asema uusiAsema = *this;
+		uusiAsema.paivitaAsema(&s);
+		double evArvo = uusiAsema.maxi(syvyys - 1)._evaluointiArvo;
+
+		if (evArvo < min) {
+			min = evArvo;
+			parasSiirto = s;
+		}
+	}
+	paluu._evaluointiArvo = min;
+	paluu._parasSiirto = parasSiirto;
 	return paluu;
 }
 
@@ -440,7 +547,7 @@ void Asema::huolehdiKuninkaanShakeista(std::list<Siirto>& lista, int vari)
 
 	if (vari == 0) {
 		vastustajanVari = 1;
-		for (int i = 0; i < 8; i++)
+		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				if (_lauta[i][j] == NULL)
 					continue;
@@ -450,10 +557,11 @@ void Asema::huolehdiKuninkaanShakeista(std::list<Siirto>& lista, int vari)
 					break;
 				}
 			}
+		}
 	}
 	else {
 		vastustajanVari = 0;
-		for (int i = 0; i < 8; i++)
+		for (int i = 0; i < 8; i++){
 			for (int j = 0; j < 8; j++) {
 				if (_lauta[i][j] == NULL)
 					continue;
@@ -463,7 +571,9 @@ void Asema::huolehdiKuninkaanShakeista(std::list<Siirto>& lista, int vari)
 					break;
 				}
 			}
+		}
 	}
+	
 
 	//1. versio ei toimi, koska lista.remove(s) ei toimi ilma == overloadausta
 	//for (Siirto s : lista) {
