@@ -142,5 +142,8 @@ Siirto Kayttoliittyma::annaVastustajanSiirto()
 
 int Kayttoliittyma::kysyVastustajanVari()
 {
-	return 0;
+	int vari;
+	wcout << "valkoiset vai mustat (0 tai 1)\n";
+	cin >> vari;
+	return vari;
 }
