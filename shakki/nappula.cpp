@@ -458,16 +458,12 @@ void Sotilas::annaSiirrot(std::list<Siirto>& lista, Ruutu* ruutu, Asema* asema, 
 	
 	if (asema->kaksoisaskelSarakkeella != -1)
 	{
-		if (vari == 0 && r.getRivi() == 4)
-		{
+		if (vari == 0 && ruutu->getRivi() == 4)
 			if (asema->_lauta[asema->kaksoisaskelSarakkeella][4] && asema->_lauta[asema->kaksoisaskelSarakkeella][4]->getKoodi() == MS)
 				lista.push_back(Siirto(*ruutu, Ruutu(asema->kaksoisaskelSarakkeella, 5)));
-		}
-		if (vari == 1 && r.getRivi() == 3)
-		{
+		if (vari == 1 && ruutu->getRivi() == 3)
 			if (asema->_lauta[asema->kaksoisaskelSarakkeella][3] && asema->_lauta[asema->kaksoisaskelSarakkeella][3]->getKoodi() == VS)
 				lista.push_back(Siirto(*ruutu, Ruutu(asema->kaksoisaskelSarakkeella, 2)));
-		}
 	}
 }
 
