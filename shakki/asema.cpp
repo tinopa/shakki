@@ -125,8 +125,9 @@ void Asema::paivitaAsema(Siirto* siirto)
 				kaksoisaskelSarakkeella = alkuSarakeInt;
 			}
 		// Ohestalyönti on tyhjään ruutuun. Vieressä oleva (sotilas) poistetaan.
-		if (nappulaKoodi == VS || nappulaKoodi == MS)
-			_lauta[alkuRiviInt][loppuSarakeInt] = NULL;
+		/*if (nappulaKoodi == VS || nappulaKoodi == MS)
+			_lauta[alkuRiviInt][loppuSarakeInt] = NULL;*/
+
 		////muissa tapauksissa alkuruutuun null ja loppuruutuun sama alkuruudusta lähtenyt nappula
 		//else {
 		_lauta[alkuSarakeInt][alkuRiviInt] = NULL;
@@ -436,7 +437,7 @@ MinMaxPaluu Asema::maxi(int syvyys)
 
 	//kantatapaus
 	if (syvyys == 0) {
-		paluu._evaluointiArvo = 0;
+		paluu._evaluointiArvo = this->evaluoi();
 		return paluu;
 	}
 
