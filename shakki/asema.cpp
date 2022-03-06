@@ -125,9 +125,9 @@ void Asema::paivitaAsema(Siirto* siirto)
 		// Ohestalyönti on tyhjään ruutuun. Vieressä oleva (sotilas) poistetaan.
 		if 
 		(
-			nappulaKoodi == VS || nappulaKoodi == MS && (alkuSarakeInt != loppuSarakeInt) 
+			(nappulaKoodi == VS || nappulaKoodi == MS) && (alkuSarakeInt != loppuSarakeInt) 
 			&& (_lauta[loppuSarakeInt][loppuRiviInt] == NULL) 
-			&& _lauta[loppuSarakeInt][alkuRiviInt]->getVari() != nappula->getVari()
+			&& (_lauta[loppuSarakeInt][alkuRiviInt]->getVari() != nappula->getVari())
 		)
 			_lauta[loppuSarakeInt][alkuRiviInt] = NULL;
 
