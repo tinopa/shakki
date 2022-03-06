@@ -67,7 +67,7 @@ void Asema::paivitaAsema(Siirto* siirto)
 
 	// Kaksoisaskel-lippu on oletusarvoisesti pois päältä.
 	// Asetetaan myöhemmin, jos tarvii.
-
+	this->kaksoisaskelSarakkeella = -1;
 
 	//Tarkastetaan on siirto lyhyt linna
 	if (siirto->onkoLyhytLinna()) {
