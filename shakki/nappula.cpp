@@ -193,7 +193,7 @@ void Ratsu::annaSiirrot(std::list<Siirto>& lista, Ruutu* ruutu, Asema* asema, in
 
 void Lahetti::annaSiirrot(std::list<Siirto>& lista, Ruutu* ruutu, Asema* asema, int vari)
 {
-	int i = 0;
+	int i = 1;
 	bool vapaaYlaOikea = true,
 		 vapaaYlaVasen = true,
 		 vapaaAlaOikea = true,
@@ -259,7 +259,7 @@ void Lahetti::annaSiirrot(std::list<Siirto>& lista, Ruutu* ruutu, Asema* asema, 
 				else if (asema->_lauta[r.getSarake()][r.getRivi()] != NULL) {
 					if (asema->_lauta[r.getSarake()][r.getRivi()]->getVari() != vari) {
 						lista.push_back(Siirto(*ruutu, r));
-						vapaaYlaOikea = false;
+						vapaaAlaOikea = false;
 					}
 					else
 						vapaaAlaOikea = false;
@@ -442,7 +442,7 @@ void Sotilas::annaSiirrot(std::list<Siirto>& lista, Ruutu* ruutu, Asema* asema, 
 				lista.push_back(Siirto(*ruutu, r));
 			}
 			//katsontaan onko mahdollista mennä kaksi ruutua eteenpäin
-			if (ruutu->getRivi() == 1 && asema->_lauta[r.getSarake()][r.getRivi() - 1] == NULL)
+			if (ruutu->getRivi() == 6 && asema->_lauta[r.getSarake()][r.getRivi() - 1] == NULL)
 				lista.push_back(Siirto(*ruutu, Ruutu(r.getSarake(), r.getRivi() - 1)));
 			//katsotaan onko edessä oikealla vastustajan nappulaa
 			if (r.getSarake() + 1 < 8 && asema->_lauta[r.getSarake() + 1][r.getRivi()] != NULL && asema->_lauta[r.getSarake() + 1][r.getRivi()]->getVari() != vari)
