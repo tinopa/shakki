@@ -39,10 +39,12 @@ int main()
 		if (asema.getSiirtovuoro() == koneenVari) {
 			MinMaxPaluu paluu;
 			if (koneenVari == 0) {
-				paluu = asema.maxi(3);
+				//paluu = asema.maxi(3);
+				paluu = asema.alphaBetaMax(-100000, 100000, 4);
 			}
 			else {
-				paluu = asema.mini(3);
+				//paluu = asema.mini(3);
+				paluu = asema.alphaBetaMin(-100000, 100000, 4);
 			}
 			siirto = paluu._parasSiirto;
 		}

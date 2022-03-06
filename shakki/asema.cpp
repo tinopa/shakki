@@ -522,6 +522,132 @@ MinMaxPaluu Asema::mini(int syvyys)
 	return paluu;
 }
 
+//Alpha-beeta
+
+MinMaxPaluu Asema::alphaBetaMax(double alpha, double beta, int syvyys) {
+	MinMaxPaluu paluu;
+	std::list<Siirto> lista;
+	this->annaLaillisetSiirrot(lista);
+	Ruutu kuningas;
+
+	if (lista.size() == 0) {
+		//matti tai patti
+		//etsit‰‰n kuningas
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				if (_lauta[i][j] == NULL)
+					continue;
+				if (_lauta[i][j]->getKoodi() == VK) {
+					kuningas.setSarake(i);
+					kuningas.setRivi(j);
+					break;
+				}
+			}
+		}
+
+		//matti
+		if (!this->onkoRuutuUhattu(&kuningas, 1)) {
+			paluu._evaluointiArvo = -100000;
+			return paluu;
+		}
+		//patti
+		if (this->onkoRuutuUhattu(&kuningas, 1)) {
+			paluu._evaluointiArvo = 0;
+			return paluu;
+		}
+	}
+
+	//kantatapaus
+	if (syvyys == 0) {
+		paluu._evaluointiArvo = this->evaluoi();
+		return paluu;
+	}
+
+	Siirto parasSiirto;
+
+	for (Siirto s : lista) {
+		Asema uusiAsema = *this;
+		uusiAsema.paivitaAsema(&s);
+		double evArvo = uusiAsema.alphaBetaMin(alpha, beta, syvyys - 1)._evaluointiArvo;
+		if (evArvo >= beta) {
+			paluu._evaluointiArvo = beta;
+			paluu._parasSiirto = s;
+			return paluu;
+		}
+		if (evArvo > alpha) {
+			alpha = evArvo;
+			parasSiirto = s;
+		}
+	}
+	paluu._evaluointiArvo = alpha;
+	paluu._parasSiirto = parasSiirto;
+	return paluu;
+}
+
+MinMaxPaluu Asema::alphaBetaMin(double alpha, double beta, int syvyys) {
+	MinMaxPaluu paluu;
+	std::list<Siirto> lista;
+	this->annaLaillisetSiirrot(lista);
+	Ruutu kuningas;
+
+	if (lista.size() == 0) {
+		//matti tai patti
+		//etsit‰‰n kuningas
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				if (_lauta[i][j] == NULL)
+					continue;
+				if (_lauta[i][j]->getKoodi() == MK) {
+					kuningas.setSarake(i);
+					kuningas.setRivi(j);
+					break;
+				}
+			}
+		}
+
+		//matti
+		if (!this->onkoRuutuUhattu(&kuningas, 0)) {
+			paluu._evaluointiArvo = 100000;
+			return paluu;
+		}
+		//patti
+		if (this->onkoRuutuUhattu(&kuningas, 0)) {
+			paluu._evaluointiArvo = 0;
+			return paluu;
+		}
+	}
+
+	//kantatapaus
+	if (syvyys == 0) {
+		paluu._evaluointiArvo = this->evaluoi();
+		return paluu;
+	}
+
+	Siirto parasSiirto;
+
+	for (Siirto s : lista) {
+		Asema uusiAsema = *this;
+		uusiAsema.paivitaAsema(&s);
+		double evArvo = uusiAsema.alphaBetaMax(alpha, beta, syvyys - 1)._evaluointiArvo;
+		if (evArvo <= alpha) {
+			paluu._evaluointiArvo = alpha;
+			paluu._parasSiirto = s;
+			return paluu;
+		}
+		if (evArvo < beta) {
+			beta = evArvo;
+			parasSiirto = s;
+		}
+	}
+	paluu._evaluointiArvo = beta;
+	paluu._parasSiirto = parasSiirto;
+	return paluu;
+}
+
+
+
+
+
 
 bool Asema::onkoRuutuUhattu(Ruutu* ruutu, int vastustajanVari)
 {
