@@ -456,7 +456,7 @@ void Sotilas::annaSiirrot(std::list<Siirto>& lista, Ruutu* ruutu, Asema* asema, 
 		}
 	}
 	
-	if (asema->kaksoisaskelSarakkeella != -1)
+	if (asema->kaksoisaskelSarakkeella != -1 && abs(asema->kaksoisaskelSarakkeella - ruutu->getSarake()) == 1)
 	{
 		if (vari == 0 && ruutu->getRivi() == 4)
 			if (asema->_lauta[asema->kaksoisaskelSarakkeella][4] && asema->_lauta[asema->kaksoisaskelSarakkeella][4]->getKoodi() == MS)
