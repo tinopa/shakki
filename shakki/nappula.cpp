@@ -418,10 +418,10 @@ void Sotilas::annaSiirrot(std::list<Siirto>& lista, Ruutu* ruutu, Asema* asema, 
 			//1 ruutu eteenpäin
 			if (asema->_lauta[r.getSarake()][r.getRivi()] == NULL) {
 				lista.push_back(Siirto(*ruutu, r));
+				//katsontaan onko mahdollista mennä kaksi ruutua eteenpäin
+				if (ruutu->getRivi() == 1 && asema->_lauta[r.getSarake()][r.getRivi() + 1] == NULL)
+					lista.push_back(Siirto(*ruutu, Ruutu(r.getSarake(), r.getRivi() + 1)));
 			}
-			//katsontaan onko mahdollista mennä kaksi ruutua eteenpäin
-			if (ruutu->getRivi() == 1 && asema->_lauta[r.getSarake()][r.getRivi() + 1] == NULL)
-				lista.push_back(Siirto(*ruutu, Ruutu(r.getSarake(), r.getRivi() + 1)));
 			//katsotaan onko edessä oikealla vastustajan nappulaa. Tarkistaa ensin onko oikealla lautaa jäljellä
 			if (r.getSarake() + 1 < 8 && asema->_lauta[r.getSarake() + 1][r.getRivi()] != NULL && asema->_lauta[r.getSarake() + 1][r.getRivi()]->getVari() != vari)
 				lista.push_back(Siirto(*ruutu, Ruutu(r.getSarake() + 1, r.getRivi())));
@@ -440,10 +440,10 @@ void Sotilas::annaSiirrot(std::list<Siirto>& lista, Ruutu* ruutu, Asema* asema, 
 			//1 ruutu eteenpäin
 			if (asema->_lauta[r.getSarake()][r.getRivi()] == NULL) {
 				lista.push_back(Siirto(*ruutu, r));
+				//katsontaan onko mahdollista mennä kaksi ruutua eteenpäin
+				if (ruutu->getRivi() == 6 && asema->_lauta[r.getSarake()][r.getRivi() - 1] == NULL)
+					lista.push_back(Siirto(*ruutu, Ruutu(r.getSarake(), r.getRivi() - 1)));
 			}
-			//katsontaan onko mahdollista mennä kaksi ruutua eteenpäin
-			if (ruutu->getRivi() == 6 && asema->_lauta[r.getSarake()][r.getRivi() - 1] == NULL)
-				lista.push_back(Siirto(*ruutu, Ruutu(r.getSarake(), r.getRivi() - 1)));
 			//katsotaan onko edessä oikealla vastustajan nappulaa
 			if (r.getSarake() + 1 < 8 && asema->_lauta[r.getSarake() + 1][r.getRivi()] != NULL && asema->_lauta[r.getSarake() + 1][r.getRivi()]->getVari() != vari)
 				lista.push_back(Siirto(*ruutu, Ruutu(r.getSarake() + 1, r.getRivi())));
