@@ -118,12 +118,10 @@ void Asema::paivitaAsema(Siirto* siirto)
 		loppuSarakeInt = siirto->getLoppuruutu().getSarake();
 
 		// Tarkistetaan oliko sotilaan kaksoisaskel
-		if (nappulaKoodi == VS || nappulaKoodi == MS)
-			if ((abs(alkuRiviInt - loppuRiviInt)) == 2)
-			{
-				// (asetetaan kaksoisaskel-lippu)
-				kaksoisaskelSarakkeella = alkuSarakeInt;
-			}
+		if ((nappulaKoodi == VS || nappulaKoodi == MS) &&
+			(alkuRiviInt - loppuRiviInt == 2 || alkuRiviInt - loppuRiviInt == -2))
+
+			kaksoisaskelSarakkeella = alkuSarakeInt;
 		// Ohestalyönti on tyhjään ruutuun. Vieressä oleva (sotilas) poistetaan.
 		if (nappulaKoodi == VS || nappulaKoodi == MS && (alkuSarakeInt != loppuSarakeInt) && (_lauta[loppuSarakeInt][loppuRiviInt] == NULL))
 			_lauta[loppuSarakeInt][alkuRiviInt] = NULL;
