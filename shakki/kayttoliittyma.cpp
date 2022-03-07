@@ -88,7 +88,7 @@ void Kayttoliittyma::piirraLauta()
 			}
 			else {
 				wcout << "   ";
-			}			
+			}
 		}
 		wcout << "\n";
 	}
@@ -107,7 +107,7 @@ Siirto Kayttoliittyma::annaVastustajanSiirto()
 	wstring siirtoS;
 	wstring siirtynytNappulaS;
 	do {
-		wcout << "Anna vastustajan siirto esim. Rg1-f3, linnoitus 0-0 tai 0-0-0\n";
+		wcout << "Anna siirto esim. Rg1-f3 (tai vain g1-f3), linnoitus 0-0 tai 0-0-0\n";
 		wcin >> siirtoS;
 
 		if (siirtoS == L"0-0") {

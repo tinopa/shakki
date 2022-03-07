@@ -48,6 +48,7 @@ public:
 	bool getOnkoValkeaKTliikkunut();						// Linnoittuminen mahdollista?
 	bool getOnkoMustaDTliikkunut();							// Linnoittuminen mahdollista?
 	bool getOnkoMustaKTliikkunut();							// Linnoittuminen mahdollista?
+	bool onkoKuningasUhattu(int vari);
 	
 private:
 

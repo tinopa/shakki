@@ -232,21 +232,25 @@ vai olla est‰m‰ss‰ vastustajan korotusta siksi ei oteta kantaa
 */
 double Asema::evaluoi()
 {
+	double valkea = 0;
+	double musta = 0;
 
 	//kertoimet asetettu sen takia ett‰ niiden avulla asioiden painoarvoa voidaan s‰‰t‰‰ helposti yhdest‰ paikasta
 
 	//1. Nappuloiden arvo
 	//positiiviset arvot tarkoittavat sit‰, ett‰ valkoisilla on etu. Neg. arvot tarkoittavat, ett‰ mustalla on etu
-	double arvojenErotus = laskeNappuloidenArvo(0) - laskeNappuloidenArvo(1);
+	valkea += laskeNappuloidenArvo(0);
+	musta  += laskeNappuloidenArvo(1);
 
 	//2. Kuningas turvassa
 
 	//3. Arvosta keskustaa
-
+	valkea += nappuloitaKeskella(0);
+	musta  += nappuloitaKeskella(1);
 	// 4. Arvosta linjoja
 
 
-	return arvojenErotus * 1; //t‰h‰n voi tulevaisuudessa lis‰t‰ muiden vaiheiden tuloksia ja muuttaa kertoimia
+	return valkea - musta; //t‰h‰n voi tulevaisuudessa lis‰t‰ muiden vaiheiden tuloksia ja muuttaa kertoimia
 }
 
 
@@ -309,7 +313,6 @@ bool Asema::onkoAvausTaiKeskipeli(int vari)
 
 double Asema::nappuloitaKeskella(int vari)
 {
-	return 0;
 
 	//sotilaat ydinkeskustassa + 0.25/napa
 	//ratsut ydinkeskustassa + 0.25/napa
@@ -328,6 +331,33 @@ double Asema::nappuloitaKeskella(int vari)
 
 	//mustille laitakeskusta
 
+
+	double laitaKerroin = 0.75;
+
+	//nappuloiden m‰‰r‰t
+	int ydinKeskusNappulat = 0;
+	double laitaKeskusNappulat = 0;
+
+	//k‰y l‰pi keskimm‰iset ruudut
+	for (int i = 2; i <= 6; i++) {
+		for (int j = 2; i <= 6; i++) {
+			if (((i == 3 && j == 3) || (i == 3 && j == 4) || (i == 4 && j == 3) || (i == 4 && j == 4)) && _lauta[i][j]->getVari() == vari) {
+				//jos ollaan keskim‰misess‰ nelj‰ss‰ ruudussa
+				ydinKeskusNappulat++;
+				continue;
+			}
+			if (_lauta[i][j] != NULL && _lauta[i][j]->getVari() == vari) {
+				laitaKeskusNappulat++;
+			}
+		}
+	}
+
+	double tulos = ydinKeskusNappulat + laitaKeskusNappulat * laitaKerroin;
+
+	if (vari == 0)
+		return tulos;
+	else
+		return tulos * -1;
 }
 
 
@@ -811,4 +841,31 @@ void Asema::annaLaillisetSiirrot(std::list<Siirto>& lista) {
 	huolehdiKuninkaanShakeista(lista, _siirtovuoro);
 	annaLinnoitusSiirrot(lista, _siirtovuoro);
 
+}
+
+bool Asema::onkoKuningasUhattu(int vari) {
+	//t‰m‰ funktio etsii jomman kumman v‰rin kuninkaan ja katsoo onko se uhattu
+	//funktiota k‰ytet‰‰n ennen kuin pelaaja syˆtt‰‰ vuoronsa
+	//t‰m‰ auttaa huomaamaan, jos pelaajan kuningas on uhattuna
+
+	int vastustajanVari;
+
+	if (vari == 0) {
+		vastustajanVari = 1;
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				if (_lauta[i][j] != NULL && _lauta[i][j]->getKoodi() == VK)
+					return onkoRuutuUhattu(&Ruutu(i, j), vastustajanVari);
+			}
+		}
+	}
+	else {
+		vastustajanVari = 0;
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				if (_lauta[i][j] != NULL && _lauta[i][j]->getKoodi() == MK)
+					return onkoRuutuUhattu(&Ruutu(i, j), vastustajanVari);
+			}
+		}
+	}
 }

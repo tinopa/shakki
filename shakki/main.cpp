@@ -49,6 +49,8 @@ int main()
 			siirto = paluu._parasSiirto;
 		}
 		else {
+			if (asema.onkoKuningasUhattu(asema.getSiirtovuoro()))
+				wcout << "Kuningas uhattu!\n";
 			siirto = Kayttoliittyma::getInstance()->
 				annaVastustajanSiirto();
 		}
