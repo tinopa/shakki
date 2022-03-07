@@ -52,7 +52,7 @@ int main()
 			if (asema.onkoKuningasUhattu(asema.getSiirtovuoro()))
 				wcout << "Kuningas uhattu!\n";
 			siirto = Kayttoliittyma::getInstance()->
-				annaVastustajanSiirto();
+				annaVastustajanSiirto(lista);
 		}
 
 		//viikko 2 testaus

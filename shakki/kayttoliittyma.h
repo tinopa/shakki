@@ -13,7 +13,7 @@ public:
 
 	void aseta_asema(Asema* asema) { this->_asema = asema;  }
 	void piirraLauta();
-	Siirto annaVastustajanSiirto();
+	Siirto annaVastustajanSiirto(std::list<Siirto>& lista);
 	int kysyVastustajanVari();
 
 	static Kayttoliittyma* getInstance();
@@ -25,4 +25,5 @@ private:
 
 	Kayttoliittyma() {}
 	Kayttoliittyma(Asema* asema) { this->_asema = asema; }
+	bool onkoSiirtoLaillinen(int lahtoX, int lahtoY, int tuloX, int tuloY, std::list<Siirto>& lista);
 };

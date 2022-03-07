@@ -101,7 +101,7 @@ void Kayttoliittyma::piirraLauta()
 	muodollisesti korrekti (ei tarkista aseman laillisuutta)
 	Ottaa irti myös nappulan kirjaimen (K/D/L/R/T), tarkistaa että kirjain korrekti
 */
-Siirto Kayttoliittyma::annaVastustajanSiirto()
+Siirto Kayttoliittyma::annaVastustajanSiirto(std::list<Siirto>& lista)
 {
 	int lahtoX, lahtoY, tuloX, tuloY;
 	wstring siirtoS;
@@ -128,10 +128,12 @@ Siirto Kayttoliittyma::annaVastustajanSiirto()
 		tuloX = siirtoS[3] - 'a';
 		tuloY = _wtoi(&siirtoS[4]) - 1;
 
-		if (((lahtoX < 0 || lahtoX > 7) || (lahtoY < 0 || lahtoX > 7) || (tuloX < 0 || tuloX > 7) || (tuloY < 0 || tuloY > 7)))
+		if ((lahtoX < 0 || lahtoX > 7) || (lahtoY < 0 || lahtoX > 7) || (tuloX < 0 || tuloX > 7) || (tuloY < 0 || tuloY > 7))
 			wcout << "siirron täytyy olla muotoa esim. Rf1-f3, \n aakkoset väliltä a-h\n numerot väliltä 1-8\n Nappula on (K,k),(D,d),(R,r),(L,l)\n sotilas jätetään merkitsemättä\n";
+		else if (!onkoSiirtoLaillinen(lahtoX, lahtoY, tuloX, tuloY, lista))
+			wcout << " siirron pitää olla laillinen\n";
 		
-	} while (((lahtoX < 0 || lahtoX > 7) || (lahtoY < 0 || lahtoX > 7) || (tuloX < 0 || tuloX > 7) || (tuloY < 0 || tuloY > 7)));
+	} while (((lahtoX < 0 || lahtoX > 7) || (lahtoY < 0 || lahtoX > 7) || (tuloX < 0 || tuloX > 7) || (tuloY < 0 || tuloY > 7)) || !onkoSiirtoLaillinen(lahtoX, lahtoY, tuloX, tuloY, lista));
 
 	Ruutu alkuRuutu(lahtoX, lahtoY);
 	Ruutu loppuRuutu(tuloX, tuloY);
@@ -146,4 +148,12 @@ int Kayttoliittyma::kysyVastustajanVari()
 	wcout << "valkoiset vai mustat (0 tai 1)\n";
 	cin >> vari;
 	return vari;
+}
+
+bool Kayttoliittyma::onkoSiirtoLaillinen(int lahtoX, int lahtoY, int tuloX, int tuloY, std::list<Siirto>& lista) {
+	for (Siirto s : lista) {
+		if (s.getAlkuruutu().getSarake() == lahtoX && s.getAlkuruutu().getRivi() == lahtoY && s.getLoppuruutu().getSarake() == tuloX && s.getLoppuruutu().getRivi() == tuloY)
+			return true;
+	}
+	return false;
 }
