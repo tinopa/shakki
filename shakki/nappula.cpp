@@ -430,7 +430,7 @@ void Sotilas::annaSiirrot(std::list<Siirto>& lista, Ruutu* ruutu, Asema* asema, 
 				lista.push_back(Siirto(*ruutu, Ruutu(r.getSarake() - 1, r.getRivi())));
 		}
 		else {
-			//korotus
+			lisaaSotilaanKorotukset(&Siirto(*ruutu, Ruutu(r.getSarake(), r.getRivi())), lista, asema);
 		}
 	}
 	else {
@@ -452,7 +452,7 @@ void Sotilas::annaSiirrot(std::list<Siirto>& lista, Ruutu* ruutu, Asema* asema, 
 				lista.push_back(Siirto(*ruutu, Ruutu(r.getSarake() - 1, r.getRivi())));
 		}
 		else {
-			//korotus
+			lisaaSotilaanKorotukset(&Siirto(*ruutu, Ruutu(r.getSarake(), r.getRivi())), lista, asema);
 		}
 	}
 	

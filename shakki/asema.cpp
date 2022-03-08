@@ -137,7 +137,7 @@ void Asema::paivitaAsema(Siirto* siirto)
 		_lauta[loppuSarakeInt][loppuRiviInt] = nappula;
 		//}
 		if (siirto->_miksikorotetaan != NULL)
-			_lauta[loppuRiviInt][loppuSarakeInt] = siirto->_miksikorotetaan;
+			_lauta[loppuSarakeInt][loppuRiviInt] = siirto->_miksikorotetaan;
 
 		// katsotaan jos liikkunut nappula on kuningas niin muutetaan onkoKuningasLiikkunut arvo (molemmille väreille)
 		if (nappulaKoodi == VK)

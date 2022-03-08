@@ -131,15 +131,49 @@ Siirto Kayttoliittyma::annaVastustajanSiirto(std::list<Siirto>& lista)
 		if ((lahtoX < 0 || lahtoX > 7) || (lahtoY < 0 || lahtoX > 7) || (tuloX < 0 || tuloX > 7) || (tuloY < 0 || tuloY > 7))
 			wcout << "siirron täytyy olla muotoa esim. Rf1-f3, \n aakkoset väliltä a-h\n numerot väliltä 1-8\n Nappula on (K,k),(D,d),(R,r),(L,l)\n sotilas jätetään merkitsemättä\n";
 		else if (!onkoSiirtoLaillinen(lahtoX, lahtoY, tuloX, tuloY, lista))
-			wcout << " siirron pitää olla laillinen\n";
+			wcout << "siirron pitää olla laillinen\n";
 		
 	} while (((lahtoX < 0 || lahtoX > 7) || (lahtoY < 0 || lahtoX > 7) || (tuloX < 0 || tuloX > 7) || (tuloY < 0 || tuloY > 7)) || !onkoSiirtoLaillinen(lahtoX, lahtoY, tuloX, tuloY, lista));
 
 	Ruutu alkuRuutu(lahtoX, lahtoY);
 	Ruutu loppuRuutu(tuloX, tuloY);
+	Siirto siirto(alkuRuutu, loppuRuutu);
+	Nappula* siirrettava = _asema->_lauta[lahtoX][lahtoY];
 
-	return Siirto(alkuRuutu, loppuRuutu);
-	
+	if (siirrettava != NULL && siirrettava->getKoodi() == VS && siirto.getLoppuruutu().getRivi() == 7)
+	{
+		while (true)
+		{
+			std::wcout << "Miksi nappulaksi haluat korottaa? (esim. D)\n";
+			std::wstring vastaus;
+			std::wcin >> vastaus;
+			if (vastaus == L"D" || vastaus == L"d") siirto._miksikorotetaan = Asema::vd;
+			else if (vastaus == L"T" || vastaus == L"t") siirto._miksikorotetaan = Asema::vt;
+			else if (vastaus == L"L" || vastaus == L"l") siirto._miksikorotetaan = Asema::vl;
+			else if (vastaus == L"R" || vastaus == L"r") siirto._miksikorotetaan = Asema::vr;
+			else continue;
+
+			break;
+		}
+	}
+	else if (siirrettava != NULL && siirrettava->getKoodi() == MS && siirto.getLoppuruutu().getRivi() == 0)
+	{
+		while (true)
+		{
+			std::wcout << "Miksi nappulaksi haluat korottaa? (esim. D)\n";
+			std::wstring vastaus;
+			std::wcin >> vastaus;
+			if (vastaus == L"D" || vastaus == L"d") siirto._miksikorotetaan = Asema::md;
+			else if (vastaus == L"T" || vastaus == L"t") siirto._miksikorotetaan = Asema::mt;
+			else if (vastaus == L"L" || vastaus == L"l") siirto._miksikorotetaan = Asema::ml;
+			else if (vastaus == L"R" || vastaus == L"r") siirto._miksikorotetaan = Asema::mr;
+			else continue;
+
+			break;
+		}
+	}
+
+	return siirto;
 }
 
 int Kayttoliittyma::kysyVastustajanVari()
